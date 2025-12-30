@@ -5,6 +5,9 @@ set -e
 # Always run relative to this script’s location
 cd "$(dirname "$0")"
 
+echo "Stopping all running Docker containers..."
+docker stop $(docker ps -a -q)
+
 echo "Deploying lbt-auth-api..."
 cd ../../lbt-auth-api
 git pull origin master
