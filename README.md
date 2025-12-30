@@ -23,4 +23,6 @@ networks:
 
 # How to run it?
 
-Go to each respective service and run `./scripts/deploy.sh`. It will pull the latest from the `master` branch and run the `docker compose up -d --build` command under the hood.
+To run each deplpyment manually, go to each respective service and run `./scripts/deploy.sh`. It will pull the latest from the `master` branch and run the `docker compose up -d --build` command under the hood.
+
+To update and restart all of them, run the `/scripts/deploy-all.sh` script from this repo.
