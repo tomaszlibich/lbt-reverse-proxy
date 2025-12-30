@@ -1,0 +1,20 @@
+{
+  "name": "lbt-reverse-proxy",
+  "version": "1.0.0",
+  "description": "A Caddy based Reverse Proxy for NodeJS apps",
+  "homepage": "https://github.com/tomaszlibich/lbt-reverse-proxy#readme",
+  "bugs": {
+    "url": "https://github.com/tomaszlibich/lbt-reverse-proxy/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tomaszlibich/lbt-reverse-proxy.git"
+  },
+  "license": "ISC",
+  "author": "Tomasz Libich",
+  "scripts": {
+    "start": "docker compose up -d --build",
+    "start:prod": "CADDYFILE=Caddyfile.prod docker compose up -d --build",
+    "test": "test"
+  }
+}

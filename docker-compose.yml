@@ -1,0 +1,28 @@
+version: "3.9"
+
+services:
+  caddy:
+    image: caddy:2
+    container_name: lbt-reverse-proxy
+    restart: unless-stopped
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    networks:
+      - lbt-net
+
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+
+networks:
+  lbt-net:
+    external: true
+    name: lbt-net
+
+volumes:
+  caddy_data:
+  caddy_config:

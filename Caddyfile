@@ -1,0 +1,25 @@
+{
+	servers {
+		timeouts {
+			read_header 10s
+			read_body 30s
+			write 30s
+			idle 2m
+		}
+	}
+}
+
+# Health check endpoint (LB + manual checks)
+:80 {
+	respond /healthcheck 200
+}
+
+# Auth API
+auth.libtomsoftware.com, auth.localhost {
+	reverse_proxy lbt-auth-api:3000
+}
+
+# Gateway
+gateway.libtomsoftware.com, gateway.localhost {
+	reverse_proxy lbt-gateway:4000
+}
