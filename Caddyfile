@@ -1,27 +1,27 @@
 {
 	auto_https off
+}
 
-	servers {
-		timeouts {
-			read_header 10s
-			read_body 30s
-			write 30s
-			idle 2m
-		}
+:80 {
+	# Healthcheck must always return 200 (for LB)
+	handle_path /healthcheck {
+		respond "OK" 200
+	}
+
+	# Route by host (same as your intent, but explicit)
+	@auth host auth.libtomsoftware.com auth.localhost
+	handle @auth {
+		reverse_proxy lbt-auth-api:3000
+	}
+
+	@gateway host gateway.libtomsoftware.com gateway.localhost
+	handle @gateway {
+		reverse_proxy lbt-gateway:4000
+	}
+
+	# TEMPORARY: show what Host Caddy actually received (remove after fix)
+	handle {
+		respond "No route for host={host} uri={uri}" 502
 	}
 }
 
-# Health check endpoint (LB + manual checks)
-:80 {
-	respond /healthcheck 200
-}
-
-# Auth API
-auth.libtomsoftware.com, auth.localhost {
-	reverse_proxy lbt-auth-api:3000
-}
-
-# Gateway
-gateway.libtomsoftware.com, gateway.localhost {
-	reverse_proxy lbt-gateway:4000
-}
