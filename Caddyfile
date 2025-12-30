@@ -1,5 +1,14 @@
 {
 	auto_https off
+
+	servers {
+		timeouts {
+			read_header 10s
+			read_body 30s
+			write 30s
+			idle 2m
+		}
+	}
 }
 
 :80 {
@@ -8,7 +17,6 @@
 		respond "OK" 200
 	}
 
-	# Route by host (same as your intent, but explicit)
 	@auth host auth.libtomsoftware.com auth.localhost
 	handle @auth {
 		reverse_proxy lbt-auth-api:3000
@@ -19,9 +27,9 @@
 		reverse_proxy lbt-gateway:4000
 	}
 
-	# TEMPORARY: show what Host Caddy actually received (remove after fix)
+	# Explicit default rather than silent fallthrough
 	handle {
-		respond "No route for host={host} uri={uri}" 502
+		respond 404
 	}
 }
 
