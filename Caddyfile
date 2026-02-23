@@ -27,6 +27,11 @@
 		reverse_proxy lbt-gateway:4000
 	}
 
+	@cia-api host cia-api.libtomsoftware.com cia-api.lbt-contractor-invoice.localhost
+	handle @cia-api {
+		reverse_proxy lbt-contractor-invoice-api:6000
+	}
+
 	# Explicit default rather than silent fallthrough
 	handle {
 		respond 404
